@@ -1,25 +1,20 @@
 import numpy as np
-import pandas as pd
-holdBest = float()
-"""
-def initializeConstTables():
-"""
+from random import random
+from random import seed
+from random import gauss
+from random import uniform
+import determine_intervals
 
-#myRandomDataTableConst = pd.DataFrame(data=None, index=None, columns=["Order#"])
-newcolumn = np.zeros((3))
+#def createrandomset():
+rand_set_size = 20
+set= np.array(())
+for j in range(0,rand_set_size):
 
-myRandomDataTableConst = np.array(())
-#myDataTableSlacks = pd.DataFrame(data=None, index=None, columns=None)
-myDataTableSlacks = np.array((10,3))
-randomSetSize = 20  #default
-num_constraints = 10
+    for i in range(0,determine_intervals.num_var):
+        rand_set = uniform(determine_intervals.lowerlimit[i],determine_intervals.upperlimit[i])   #determine intervals ile hesaplanan aralıklarda random sayı üretir her değişken için
+        set = np.append(set,rand_set)    #
+#return set.reshape(j + 1, determine_intervals.num_var)
+values = set.reshape(j + 1, determine_intervals.num_var)    #değerleri şekillendirir.
+#print(set.reshape(j + 1, determine_intervals.num_var))
+#print(values)
 
-for j in range(0,num_constraints):
-    myRandomDataTableConst[j,0]=newcolumn[j]
-    if j<num_constraints:
-        myRandomDataTableConst[j,1]=newcolumn[j]
-    else:
-        myRandomDataTableConst[j,2]=newcolumn[j]
-    myRandomDataTableConst = np.append(myRandomDataTableConst, newcolumn[j]).reshape((j + 1), len(newcolumn[j]))
-myRandomDataTableConsts = pd.DataFrame(data=myRandomDataTableConst, index=None, columns=["Order#","Constraint","Satisfy"])
-print(myRandomDataTableConsts)
