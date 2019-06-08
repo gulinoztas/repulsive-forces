@@ -1,17 +1,22 @@
-
 import math
 import trackBarObjVal
-def Goal(constraintSatisfiedRate,valTrackBarSatisfaction,maxDeviatedConst,valTrackBarDeviation,objVal,valTrackBarObjVal):
+import obj_func_val
+def Goal(constraintSatisfiedRate,maxDeviatedConst,objVal,valTrackBarObjVal):
     hitObj = 0
     hitObj +=1
+    #constraintSatisfiedRate = obj_func_val.constraintSatisfiedRate
+    #maxDeviatedConst=5
     goal1 = float()
     goal2 = float()
     goal3 = float()
     CurrentWeight1 = float()
     CurrentWeight2 = float()
     CurrentWeight3 = float()
-    goalSign = 1 if objVal==0 else abs(objVal)/objVal
+    #objVal = obj_func_val.obj
+    goalSign = 1 if objVal==float else abs(objVal)/objVal
     objective = "Min"
+
+
     if objective=="Min":
         goal1 = 1/((constraintSatisfiedRate+1.0E-100)**(1+CurrentWeight2))
         if goalSign == -1:
@@ -21,6 +26,7 @@ def Goal(constraintSatisfiedRate,valTrackBarSatisfaction,maxDeviatedConst,valTra
         else:
             goal2=1.0E+100
         goal3 = (abs(objVal+0.000000000000001)**(CurrentWeight1+trackBarObjVal.valTrackBarObjVal))
+        Goall = goalSign * goal1 * goal2 * goal3
     else:
         goal1 = (constraintSatisfiedRate+1.0E-100)**(1+CurrentWeight2)
         if goalSign == -1:
@@ -30,6 +36,6 @@ def Goal(constraintSatisfiedRate,valTrackBarSatisfaction,maxDeviatedConst,valTra
         else:
             goal2 = -1.0E+100
         goal3=abs(objVal)**(CurrentWeight1 + trackBarObjVal.valTrackBarObjVal)
-        Goal = goalSign*goal1*goal2*goal3
-    return Goal
+        Goall = goalSign*goal1*goal2*goal3
+    return Goall
 
