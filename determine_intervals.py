@@ -19,6 +19,7 @@ num_var = 4
 #constraint = ["-x1+0.0193*x2","<=","0"]
 constraint = [["-x1+0.0193*x3","<=","0"], ["-x2+0.00954*x3","<=","0"],["3.14159265359*x3**2*x4+(4/3)*3.14159265359*x3**3",">=","1296000"], ["x4","<=","240"],["x1","<=","10"],["x2","<=","10"], ["x3","<=","100"],["x1",">=","0.0625"],["x2",">=","0.0625"]]
 #constraint = [["x1","<=","2"],["x1","<=","8"],["x1","<=","5"]]
+#constraint = [["x1","<=","2.048"],["x1",">=","-2.048"],["x2","<=","2.048"],["x2",">=","-2.048"]]
 #print("cons", constraint[0][0])
 #constraint = np.array([["x1+x2",">=","4"],["2*x1+3*x3","<=","5"]])
 #strVars = ["x1","x2","x3","x4"]
@@ -329,7 +330,10 @@ print("Intervals:",myDataTableIntervals)
 Intervals = pd.DataFrame(data=strVars, index=range(1,num_var+1),columns=["Variables"])
 Intervals.insert(1,"Lower Limit",lowerlimit)
 Intervals.insert(2,"Upper Limit",upperlimit)
+Intervals.insert(3,"best",None)
 print(Intervals)
+#print(Intervals.iloc[3,1])
+#print(VarInterval)
 
 
 
