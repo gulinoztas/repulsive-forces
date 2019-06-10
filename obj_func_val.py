@@ -26,6 +26,7 @@ for j in range(0, len(sets)):
     #obj = 20+math.exp(1)-20*math.exp(-0.2*(0.2*(sets[j,0]**2+sets[j,1]**2+sets[j,2]**2+sets[j,3]**2+sets[j,4]**2))**0.5)-math.exp(0.2*(math.cos(2*3.14159265358979*sets[j,0])+ math.cos(2*3.14159265358979*sets[j,1])+ math.cos(2*3.14159265358979*sets[j,2])+ math.cos(2*3.14159265358979*sets[j,3])+ math.cos(2*3.14159265358979*sets[j,4])))     #ackley amaç fonk
     # constraint = [["-x1+0.0193*x3","<=","0"], ["-x2+0.00954*x3","<=","0"],["3.14159265359*x3**2*x4+(4/3)*3.14159265359*x3**3",">=","1296000"], ["x4","<=","240"],["x1","<=","10"],["x2","<=","10"], ["x3","<=","100"],["x1",">=","0.0625"],["x2",">=","0.0625"]]
     #obj = x1**2+x2**2+x3**2
+    #obj = 100*(x1**2-x2)**2+(1-x1)**2
     constraintPerformance = 0
     maxDeviatedConst = 0
     satisfiedConstraints = 0
@@ -90,6 +91,7 @@ for j in range(0, len(sets)):
     total_error = np.append(total_error,maxDeviatedConst)
     objective = np.append(objective,obj)
 
+
     if satisfied_constraint[j] == determine_intervals.num_constraints:
         constraintSatisfiedRate = 1
     elif abs(maxDeviatedConst)<= 0.00001:
@@ -102,16 +104,10 @@ for j in range(0, len(sets)):
 
 
 
-slack_table = slacks.reshape(random_set.train,determine_intervals.num_constraints)
-slacks_table = pd.DataFrame(data=slack_table, index=range(1,len(sets)+1),columns=["Constraint1", "Constraint2", "Constraint3", "Constraint4", "Constraint5", "Constraint6","Constraint7","Constraint8","Constraint9"])
-slacks_table.insert(9,"Satisfy",satisfied_constraint)
-slacks_table.insert(10,"satisfiedRate",satisfied_constraint/determine_intervals.num_constraints)
-#export_excel = slacks_table.to_excel(r'C:\Users\Pau\Google Drive\gülin Tez\slacks.xlsx',index=None,header=True)
-print("Slacks",slacks_table)
 
-random_set.myRandomDataTable.insert(6,"objective value",objective)
-random_set.myRandomDataTable.insert(7,"satisfied cons",satisfied_constraint)
-random_set.myRandomDataTable.insert(8,"total error in rhs",total_error)
+random_set.myRandomDataTable.insert(determine_intervals.num_var+2,"objective value",objective)
+random_set.myRandomDataTable.insert(determine_intervals.num_var+3,"satisfied cons",satisfied_constraint)
+random_set.myRandomDataTable.insert(determine_intervals.num_var+4,"total error in rhs",total_error)
 #myDataTable = pd.DataFrame(data=sets, index=range(1,len(sets)+1),columns=["x1", "x2", "x3","x4"])
 #myDataTable.insert(4,"objective value",objective)
 #myDataTable.insert(5,"satisfied cons",satisfied_constraint)
@@ -126,9 +122,9 @@ print("random values",randoms)
 const = trainSetonConstraint.reshape(random_set.train,determine_intervals.num_constraints)
 #print("satisfied const",const)
 
-constraint_satisfaction = pd.DataFrame(data=const, index=range(1,len(sets)+1),columns=["Constraint1", "Constraint2", "Constraint3", "Constraint4", "Constraint5", "Constraint6","Constraint7","Constraint8","Constraint9"])
-constraint_satisfaction.insert(9,"Satisfied Constraints",s)
-constraint_satisfaction.insert(10,"Total Number",satisfied_constraint)
+constraint_satisfaction = pd.DataFrame(data=const, index=range(1,len(sets)+1),columns=["Constraint1", "Constraint2", "Constraint3", "Constraint4","Constraint5", "Constraint6", "Constraint7", "Constraint8","Constraint9"])
+constraint_satisfaction.insert(determine_intervals.num_constraints,"Satisfied Constraints",s)
+constraint_satisfaction.insert(determine_intervals.num_constraints+1,"Total Number",satisfied_constraint)
 #export_excel = constraint_satisfaction.to_excel(r'C:\Users\Pau\Google Drive\gülin Tez\constraint_satisfaction.xlsx',index=None,header=True)
 print("constraints",constraint_satisfaction)
 
@@ -141,3 +137,9 @@ print("constraints",constraint_satisfaction)
 #print("obj",obj)
 
 
+slack_table = slacks.reshape(random_set.train,determine_intervals.num_constraints)
+slacks_table = pd.DataFrame(data=slack_table, index=range(1,len(sets)+1),columns=["Constraint1", "Constraint2", "Constraint3", "Constraint4","Constraint5", "Constraint6", "Constraint7", "Constraint8","Constraint9"])
+slacks_table.insert(determine_intervals.num_constraints,"Satisfy",satisfied_constraint)
+slacks_table.insert(determine_intervals.num_constraints+1,"satisfiedRate",satisfied_constraint/determine_intervals.num_constraints)
+#export_excel = slacks_table.to_excel(r'C:\Users\Pau\Google Drive\gülin Tez\slacks.xlsx',index=None,header=True)
+print("Slacks",slacks_table)

@@ -15,7 +15,7 @@ def myRandomVal(CurrentVar):
     else:
         myRandomVal = ((rndCategoryUp - rndCategoryLow) / 4) * random() + 3*(rndCategoryUp - rndCategoryLow)/4 + rndCategoryLow
     if IntegerVars==False:
-        myRandomVal = myRandomVal   #virgülden sonrasını almıyor.
+        myRandomVal = myRandomVal   #round olunca virgülden sonrasını almıyor.
     return myRandomVal
 #print(myRandomVal)
 #print(rndCategoryLow)
