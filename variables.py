@@ -1,0 +1,131 @@
+import numpy as np
+import math
+import dictionary
+#from rsab_v3 import *
+"""------------------PARAMETER SETTINGS-------------------"""
+function = "weldedbeam" #benchmark function name (please check the list from dictionary file)
+num_var = dictionary.WeldedBeam.num_var #the number of variables
+num_bound = dictionary.WeldedBeam.num_bound #the number of boundaries
+lowerlimit = dictionary.WeldedBeam.lowerlimit #the list of lower limits
+upperlimit = dictionary.WeldedBeam.upperlimit #the list of upper limits
+constrained = dictionary.WeldedBeam.constraints #the list of constraints
+constrained2 = dictionary.WeldedBeam.constraints2 #the list of constraints
+weight1 =[dictionary.WeldedBeam.weights[0]] #importance constant 1 in MUPE (c1)
+weight2 =[dictionary.WeldedBeam.weights[1]] #importance constant 2 in MUPE (c2)
+weight3 =[dictionary.WeldedBeam.weights[2]] #importance constant 3 in MUPE (c3)
+"""---------------RSAB-------------"""
+textboxiterations = 50 #for RSAB algorithm (the number of maximum iteration) #DEFINE 0 to bypass RSAB ALGORITHM
+increase = 0 #set size increase amount in RSAB algorithm
+testcase = 1000 #initial sized population for once in RSAB algorithm
+init_size = 20 #for RSAB algorithm
+"""--------------------------------"""
+trials =30 #default run
+set_size = 20 #dimension*10 for 10&30-sized dimensions (n)
+neighborhoodsize = 2 #neighborhood size (kappa)
+objective = "Min" #"Max" for maximization problems
+p = 3 #precision number (check_duplication)
+incremental = 1.02 #incremental parameter (ForceIt)
+stop =1.5 #stopping parameter (1+beta)
+"""-------------------------------------------------------"""
+
+"""-----------------DO NOT UPDATE BELOW-------------------"""
+subject_to_const = len(constrained)
+num_const = num_bound + subject_to_const
+dimension = num_var #default
+Fcoefficient = 0.9
+rand_set_size = set_size
+run = 1
+holdBest = np.array(())
+position = np.zeros((set_size,dimension)) #currentsolution
+check = np.zeros((set_size,dimension)) #currentsolution
+scaleFactor = np.zeros((set_size,dimension))
+bestpos = np.zeros((set_size,dimension))
+test = np.zeros((set_size,dimension)) #currentsolution
+database = np.zeros((set_size,dimension+4))
+fe = 100000
+satisfaction = np.zeros((set_size,3))
+import itertools
+iNeighbor = np.array(list(itertools.chain([np.zeros((set_size,2)) for i in range(0, set_size)])))
+boolImprovement = False
+tempVal = np.zeros((neighborhoodsize,2))
+fitness = np.zeros((set_size,1)) #mygoal
+bestfit = np.zeros((set_size,1))
+prebestfit = np.zeros((trials,1))
+gbest = 0
+selectNewBest = np.zeros((3,2))
+tempPos = np.zeros((dimension,1))
+tempArray = np.zeros((num_var+1,2))
+tempX = np.zeros((dimension,2))
+forScale = np.zeros((dimension))
+similarDist = False
+sameK = False
+pointerToDist = int
+pointerToK = int
+avgDistance = 0
+tempDist = avgDistance if avgDistance > 0 else 0.5
+calculateRelativeDistance = 0
+calculateDistance = 0
+tempAngle = 0
+MaxValue = 1.7976931348623157E+308
+MinValue = -1.7976931348623157E+308
+temp = []
+TrackBarForceIt = 10
+TrackBarObjVal = 0#[0,10]
+GravitationCorrection = 1
+tmpObjVal = float
+deltaXs = np.zeros((dimension))
+deltaXns = np.zeros((dimension))
+deltaX = np.zeros((dimension))
+deltaXX = np.zeros((dimension))
+deltaXXX = np.zeros((dimension))
+impCounter = 0
+worstHit = 0
+hitObj = 0
+objVal = float
+maxDeviatedConst = 0
+constraintSatisfiedRate = 1
+GlobalNeighborhoodsize = 2
+TextBoxSatisfyRate = 1
+boundedVars = True
+previousBest = [1.7976931348623157E+308]*(num_var+6)
+CurrentSolution = np.zeros(num_var)
+satisfiedConstraints = 0
+counter = 1
+sayac = 0#1
+initial = 0
+b = 0
+a = 0
+trainSet = np.zeros([set_size, num_var + 1])
+best_so_far = np.zeros((trials,num_var+4))
+init = np.zeros((trials,num_var*2))
+loop = 0
+import pandas as pd
+Results = pd.DataFrame
+Intervals = pd.DataFrame
+Interval = pd.DataFrame
+CurrentInterval = pd.DataFrame
+Interval_0 = pd.DataFrame
+ave_table = np.zeros((1,num_var+4))
+z = []
+DataTableTrain = np.zeros([testcase, num_var + 6])
+DataTableConst = np.zeros([testcase, num_const + 2])
+DataTableSlacks = np.zeros([testcase, num_const + 2])
+trainSetonConstraints = np.zeros([2, num_const + 1])
+constraintPerformance = np.zeros(num_const)
+change = 0
+update = 0
+bestInterval = []
+previousInterval = []
+chg = False
+boundary = np.zeros([textboxiterations, num_var *2+1])
+bound = np.array(())
+y = 0.25
+relocate_interval = pd.DataFrame
+interval = pd.DataFrame
+tekrar = 0
+g_best_update = 0
+dup = 0
+neigh = 0
+check_dup = 0
+allow = 0
+allow2 = 0
